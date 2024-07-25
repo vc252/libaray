@@ -78,7 +78,7 @@ content {
 
 content .book {
     background-color: white;
-    height: 200px;
+    min-height: 200px;
     width: 300px;
     border-radius: 10px;
     border-style: solid;
@@ -88,6 +88,7 @@ content .book {
     flex-direction: column;
     align-items: center;
     position: relative;
+    padding: 5px 5px 0px 5px;
 }
 
 content .info {
@@ -150,21 +151,37 @@ content .info {
 }
 
 
-#title {
+#title-card {
     font-size: 25px;
     font-weight: bold;
     align-self: self-start;
-    padding-left: 10px;
+    text-align: left;
+    white-space: wrap;
+    text-wrap: wrap;
+    word-wrap: break-word; /* Break words when necessary */
+    word-break: break-all; /* Break words when necessary */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;
+    width: 100%;
 }
 
-#pages {
+#pages-card {
     border-top: solid black 1px;
     margin-top: 10px;
 }
 
-#author {
+#author-card {
     align-self: flex-end;
-    padding-right: 10px;
+    text-align: right;
     font-family: "handwriting";
     font-size: 25px;
+    white-space: wrap;
+    text-wrap: wrap;
+    word-wrap: break-word; /* Break words when necessary */
+    word-break: break-all; /* Break words when necessary */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;
+    width: 100%;
 }

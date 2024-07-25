@@ -32,6 +32,39 @@ function addBookToLibrary(title,author,pages,read,review) {
     counter++;
 }
 
+function changeReadStatus(e) {
+    let book = e.target.parentElement.parentElement;
+    let info = book.querySelector(".info");
+    let readStatus = info.lastElementChild.textContent;
+    if (readStatus === "completed") {
+        info.lastElementChild.textContent = "in progress";
+    } else {
+        info.lastElementChild.textContent = "completed";
+    }
+    if (e.target.textContent === "read") {
+        e.target.textContent = "not read";
+    } else {
+        e.target.textContent = "read";
+    }
+}
+
+function showReview(e) {
+    let reviewarea = e.target.parentElement.parentElement.querySelector(".book > textarea");
+    
+    if (reviewarea.style.display==="none") {
+        reviewarea.style.display = "block"
+    } else {
+        reviewarea.style.display = "none";
+    }
+}
+
+function deleteBook(e) {
+    let book  = e.target.parentElement.parentElement;
+    let index = book.getAttribute("data-index");
+    delete myLibrary[index];
+    contentArea.removeChild(book);
+}
+
 function displayBooksInLibrary(title,author,pages,read,review) {
     let bookCard = document.createElement("div");
     bookCard.classList.add("book");
@@ -44,33 +77,14 @@ function displayBooksInLibrary(title,author,pages,read,review) {
     let readButton = document.createElement("button");
     readButton.classList.add("read-button");
     readButton.addEventListener("click",(e)=>{
-        let book = e.target.parentElement.parentElement;
-        let info = book.querySelector(".info");
-        let readStatus = info.lastElementChild.textContent;
-        if (readStatus === "completed") {
-            info.lastElementChild.textContent = "in progress";
-        } else {
-            info.lastElementChild.textContent = "completed";
-        }
-        if (e.target.textContent === "read") {
-            e.target.textContent = "not read";
-        } else {
-            e.target.textContent = "read";
-        }
+        changeReadStatus(e);
     })
     buttonContainer.append(readButton);
 
     let reviewButton = document.createElement("button");
     reviewButton.textContent = "review >>";
     reviewButton.addEventListener("click",(e)=>{
-        let reviewarea = e.target.parentElement.parentElement.querySelector(".book > textarea");
-    
-        if (reviewarea.style.display==="none") {
-            reviewarea.style.display = "block"
-        } else {
-            reviewarea.style.display = "none";
-        }
-
+        showReview(e);
     })
     buttonContainer.append(reviewButton);
 
@@ -78,17 +92,14 @@ function displayBooksInLibrary(title,author,pages,read,review) {
     deleteButton.classList.add("delete-button");
     deleteButton.textContent = `delete`;
     deleteButton.addEventListener("click",(e)=>{
-        let book  = e.target.parentElement.parentElement;
-        let index = book.getAttribute("data-index");
-        delete myLibrary[index];
-        contentArea.removeChild(book);
+        deleteBook(e);
     })
     buttonContainer.append(deleteButton);
 
     infoContainer.innerHTML = `
-        <p id="title">${title}</p>
-        <p id="author">by ${author}</p>
-        <p id="pages">${pages} pages</p>
+        <p id="title-card">${title}</p>
+        <p id="author-card">by ${author}</p>
+        <p id="pages-card">${pages} pages</p>
     `
     if (read) {
         infoContainer.innerHTML+=`<p>completed</p>`;
