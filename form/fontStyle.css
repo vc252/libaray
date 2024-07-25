@@ -1,0 +1,120 @@
+@font-face {
+    font-family: "handwriting";
+    src:
+        url("fonts/journal-webfont.woff") format("woff2"),
+        url("fonts/journal-webfont.woff2") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "typewriter";
+    src:
+        url("fonts/momot___-webfont.woff2") format("woff2"),
+        url("fonts/momot___-webfont.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+dialog::backdrop {
+    backdrop-filter: blur(8px);
+}
+
+dialog {
+    background: none;
+    border-style: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: relative;
+}
+
+
+dialog > button:first-child {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    color: white;
+    background: none;
+    border: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    padding: 2em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+    background-color: rgb(74, 74, 74);
+    color: aliceblue;
+    opacity: 1;
+    overflow: auto;
+}
+
+ul {
+    list-style-type: none;
+}
+
+form li + li {
+    margin-top: 1em;
+}
+
+form label + input, form label + textarea {
+    margin-top: .3em;
+}
+
+h1 {
+    font-family: "typewriter";
+}
+
+label {
+    /* Uniform size & alignment */
+    display: block;
+    text-align: left;
+    font-family: "typewriter";
+}
+
+input, textarea {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    width: 250px;
+    box-sizing: border-box;
+}
+
+input:focus, form textarea:focus {
+    border-color: rgb(84, 81, 81);
+    border-radius: 4px;
+    border-style: solid;
+    background: rgb(228, 224, 224);
+}
+
+input:valid {
+    background-color: rgb(196, 218, 164);
+    border: none;
+}
+
+input:invalid {
+    border-color: red;
+    border-style: dashed;
+    border-width: 1.5px;
+}
+
+textarea {
+    overflow: auto;
+}
+
+form button {
+    height: 2em;
+    width: 5em;
+    background-color: rgb(127, 255, 142);
+    border-radius: 4px;
+    border: solid 1.5px #ccc;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, .3);
+}

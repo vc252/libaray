@@ -1,13 +1,18 @@
 
 const contentArea = document.querySelector("content");
+const form = document.querySelector("form");
+const dialog = document.querySelector("dialog");
+const addBookButton = document.querySelector("header button");
+const close = document.querySelector("dialog > button:first-child");
 const myLibrary = {};
 let counter = 0;
 
-function Book(title,author,pages,read) {
+function Book(title,author,pages,read,review) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
+    this.review = review;
 
     this.info = function() {
         let returnVal = `${this.title} by ${this.author}, ${this.pages}`;
@@ -20,14 +25,14 @@ function Book(title,author,pages,read) {
     }
 }
 
-function addBookToLibrary(title,author,pages,read) {
+function addBookToLibrary(title,author,pages,read,review) {
     let newBook = new Book(title,author,pages,read);;
     myLibrary[counter] = newBook;
-    displayBooksInLibrary(title,author,pages,read);
+    displayBooksInLibrary(title,author,pages,read,review);
     counter++;
 }
 
-function displayBooksInLibrary(title,author,pages,read) {
+function displayBooksInLibrary(title,author,pages,read,review) {
     let bookCard = document.createElement("div");
     bookCard.classList.add("book");
     bookCard.setAttribute("data-index",`${counter}`);
@@ -40,9 +45,34 @@ function displayBooksInLibrary(title,author,pages,read) {
     readButton.classList.add("read-button");
     readButton.addEventListener("click",(e)=>{
         let book = e.target.parentElement.parentElement;
-        console.log(book.getAttribute("data-index"));
+        let info = book.querySelector(".info");
+        let readStatus = info.lastElementChild.textContent;
+        if (readStatus === "completed") {
+            info.lastElementChild.textContent = "in progress";
+        } else {
+            info.lastElementChild.textContent = "completed";
+        }
+        if (e.target.textContent === "read") {
+            e.target.textContent = "not read";
+        } else {
+            e.target.textContent = "read";
+        }
     })
     buttonContainer.append(readButton);
+
+    let reviewButton = document.createElement("button");
+    reviewButton.textContent = "review >>";
+    reviewButton.addEventListener("click",(e)=>{
+        let reviewarea = e.target.parentElement.parentElement.querySelector(".book > textarea");
+    
+        if (reviewarea.style.display==="none") {
+            reviewarea.style.display = "block"
+        } else {
+            reviewarea.style.display = "none";
+        }
+
+    })
+    buttonContainer.append(reviewButton);
 
     let deleteButton = document.createElement("button");
     deleteButton.classList.add("delete-button");
@@ -56,28 +86,52 @@ function displayBooksInLibrary(title,author,pages,read) {
     buttonContainer.append(deleteButton);
 
     infoContainer.innerHTML = `
-        <p>${title}</p>
-        <p>${author}</p>
-        <p>${pages} pages</p>
+        <p id="title">${title}</p>
+        <p id="author">by ${author}</p>
+        <p id="pages">${pages} pages</p>
     `
     if (read) {
         infoContainer.innerHTML+=`<p>completed</p>`;
         readButton.textContent = `read`;
     } else {
-        infoContainer.innerHTML+=`<p>inProgress</p>`;
+        infoContainer.innerHTML+=`<p>in progress</p>`;
         readButton.textContent = 'not read';
     }
+
+    let bookReview = document.createElement("textarea");
+    bookReview.textContent = review;
+
     bookCard.append(infoContainer);
+    bookCard.append(bookReview);
     bookCard.append(buttonContainer);
     contentArea.append(bookCard);
     
 }
 
-let addBookButton = document.querySelector("header button");
 addBookButton.addEventListener("click",()=>{
     //get info from somwhere implement it later
-    addBookToLibrary("sucess","vipul","3000",true);
+    form.reset()
+    dialog.showModal();
 })
+
+
+close.addEventListener("click",()=>{
+    dialog.close();
+})
+
+
+form.addEventListener("submit",()=>{
+    let data = new FormData(form);
+    let bookData = {
+        title: data.get("title"),
+        author: data.get("author"),
+        pages: data.get("pages"),
+        review: data.get("review"),
+        status: data.get("status")===null ? false : true, 
+    }
+    addBookToLibrary(bookData["title"],bookData["author"],bookData["pages"],bookData["status"],bookData["review"]);
+})
+
 
 
 

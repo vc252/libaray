@@ -1,3 +1,21 @@
+@font-face {
+    font-family: "handwriting";
+    src:
+        url(".forms/fonts/journal-webfont.woff") format("woff2"),
+        url(".forms/fonts/journal-webfont.woff2") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "typewriter";
+    src:
+        url("fonts/momot___-webfont.woff2") format("woff2"),
+        url("fonts/momot___-webfont.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
 * {
     padding: 0px;
     margin: 0px;
@@ -69,6 +87,7 @@ content .book {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
 
 content .info {
@@ -78,6 +97,8 @@ content .info {
     flex-direction: column;
     flex:1;
     line-height: 30px;
+    width: 100%;
+    font-size: 15px;
 }
 
 .book div:last-child {
@@ -85,8 +106,65 @@ content .info {
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    border-style: solid;
-    border-color: black;
-    border-width: 3px;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: black;
     align-self: stretch;
+}
+
+.book div:last-child button {
+    height: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 4px;
+    border-style: none;
+}
+
+.delete-button {
+    background-color: red;
+    color: azure;
+}
+
+.read-button {
+    background-color: aquamarine;
+    color: rgb(49, 49, 49);
+}
+
+.book > textarea {
+    position: absolute;
+    display: none;
+    z-index: 100;
+    width: 100%;
+    bottom: 0;
+    overlay: auto;
+    transition: transform 0.3s ease-out;
+    background-color: black;
+    opacity: .6;
+    transform: translateY(100%);
+    border-radius: 10px;
+    color:white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, .5);
+    border: solid;
+    border-color: whitesmoke;
+    border-width: 2px;
+}
+
+
+#title {
+    font-size: 25px;
+    font-weight: bold;
+    align-self: self-start;
+    padding-left: 10px;
+}
+
+#pages {
+    border-top: solid black 1px;
+    margin-top: 10px;
+}
+
+#author {
+    align-self: flex-end;
+    padding-right: 10px;
+    font-family: "handwriting";
+    font-size: 25px;
 }
